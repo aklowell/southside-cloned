@@ -1,0 +1,25 @@
+body {
+    font-family: sans-serif;
+    }
+
+h1 {
+    font-family: serif;
+    color: #2E86C1;
+    }
+
+th {
+    text-align: left;
+    border-bottom: 2px solid;
+    margin-left: 15px;
+    }
+
+td {
+    border-bottom: 1px solid black;
+
+    }
+
+table {
+    padding: 10px;
+    border-spacing: 10px;
+    }
+
