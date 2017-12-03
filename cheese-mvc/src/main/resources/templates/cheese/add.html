@@ -6,14 +6,26 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<form method ="post" style="max-width:600px;">
+<form method ="post" th:object = "${cheese}" style="max-width:600px;">
     <div class="form-group">
-    <label>Name of Cheese:</label>
-    <input class="form-control" type = "text" name="cheeseName" />
+    <label th:for="cheeseName">Name of Cheese:</label>
+    <input class="form-control" th:field="*{cheeseName}" />
+        <span th:errors="*{cheeseName}" class="error"></span>
     </div>
     <div class="form-group">
-    <label>Description of Cheese:</label>
-    <input class="form-control" type = "text" name = "cheeseType" />
+    <label th:for="cheeseType">Description of Cheese:</label>
+    <input class="form-control" th:field="*{cheeseType}" />
+        <span th:errors="*{cheeseType}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="type"></label>
+        <select th:field="*{variety}">
+            <option th:each="cheeseVariety : ${cheeseVarieties}"
+                th:text="${cheeseVariety.name}"
+                th:value="${cheeseVariety}">
+            </option>
+        </select>
     </div>
     <input type = "submit" value="Add Cheese" />
 

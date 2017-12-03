@@ -10,10 +10,12 @@
         <tr>
             <th>Cheese</th>
             <th>Description</th>
+            <th>Variety</th>
         </tr>
     <tr th:each="cheese : ${cheeses}">
         <td th:text="${cheese.cheeseName}">Cheese</td>
         <td th:text="${cheese.cheeseType}">Description</td>
+        <td th:text="${cheese.variety.name"}>Variety</td>
         <td><a th:href="@{'/cheese/edit/' + ${cheese.cheeseId}}">Edit</a></td>
     </tr>
     </table>

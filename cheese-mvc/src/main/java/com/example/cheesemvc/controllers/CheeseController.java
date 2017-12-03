@@ -1,13 +1,16 @@
 package com.example.cheesemvc.controllers;
 
 
+
+
+
 import com.example.cheesemvc.models.Cheese;
 import com.example.cheesemvc.models.CheeseData;
+import com.example.cheesemvc.models.cheeseVariety;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 @Controller
 @RequestMapping("cheese")
@@ -26,14 +29,21 @@ public class CheeseController {
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
+        model.addAttribute(new Cheese());
+        model.addAttribute("cheeseTypes", cheeseVariety.values());
         return "cheese/add";
     }
 
     //MODEL BINDING
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String processAddCheeseForm(@ModelAttribute Cheese newCheese) {
+    public String processAddCheeseForm(Model model, @ModelAttribute @Valid Cheese newCheese, Errors errors) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Cheese");
+            return "cheese/add";
+        }
         CheeseData.add(newCheese);
         //Redirect to /cheese
+
         return "redirect:";
     }
 
@@ -57,7 +67,7 @@ public class CheeseController {
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
     public String displayEditForm(@PathVariable int cheeseId, Model model) {
         Cheese editCheese = CheeseData.getById(cheeseId);
-        model.addAttribute("title", "Edit Cheese");
+
         model.addAttribute("cheeseName", editCheese.getCheeseName());
         model.addAttribute("cheeseType", editCheese.getCheeseType());
         model.addAttribute("cheeseId", editCheese.getCheeseId());
