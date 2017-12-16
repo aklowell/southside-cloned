@@ -15,6 +15,7 @@
     <tr th:each="cheese : ${cheeses}">
         <td th:text="${cheese.cheeseName}">Cheese</td>
         <td th:text="${cheese.cheeseType}">Description</td>
+        <td th:text="${cheese.category.name}">Variety</td>
 
       <!--  <td th:text="${categories}"></td> -->
 

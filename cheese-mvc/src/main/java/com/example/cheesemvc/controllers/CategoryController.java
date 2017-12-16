@@ -46,7 +46,7 @@ public class CategoryController {
         }
         categoryDao.save(category);
 
-        return "redirect:/category/index";
+        return "redirect:/category";
     }
 
     }

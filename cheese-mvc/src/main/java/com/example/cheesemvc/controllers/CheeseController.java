@@ -58,7 +58,7 @@ public class CheeseController {
         cheeseDao.save(newCheese);
         //Redirect to /cheese
 
-        return "redirect:/cheese/index";
+        return "redirect:/cheese";
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.GET)
