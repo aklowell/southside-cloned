@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+
+<div th:replace="fragments :: page-header"></div>
+
+<div class="container body-content">
+
+
+    <form method ="post" th:object = "${book}" style="max-width:600px;">
+        <div class="form-group">
+            <label th:for="title">Book title:</label>
+            <input class="form-control" th:field="*{title}" />
+            <span th:errors="*{title}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="author">Author (first name):</label>
+            <input class="form-control" th:field="*{authorFirstName}" />
+
+            <label th:for="author">Author (last name):</label>
+            <input class="form-control" th:field="*{authorLastName}" />
+            <!-- TODO add both first and last name -->
+        </div>
+
+        <div class="form-group">
+            <label th:for="genre">Genre</label>
+            <select th:field="*{genre}">
+                <option th:each="bookGenre : ${bookGenres}"
+                        th:text="${bookGenre.name}"
+                        th:value="${bookGenre}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="checkbox" th:field="*{type}" th:value="${type}"/>
+            <label th:for="type">Check if recommending a book.</label>
+        </div>
+        <input type = "submit" value="Add Book" />
+
+    </form>
+
+
+</div>
+
+
+</body>
+</html>

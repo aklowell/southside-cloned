@@ -3,11 +3,14 @@
 <head th:replace="fragments :: head"></head>
 <body class="container">
 <h1 th:text="${title}">Default Title</h1>
-
 <nav th:replace="fragments :: navigation"></nav>
+<p th:unless="${categories} and ${categories.size()}">No categories added yet! </p>
 
 
-<h2>Welcome <span th:text= "${user.username}"  th:value="${user.username}">User Name</span>!</h2>
+<ul th:each="category : ${categories}">
+    <li th:text="${category.name}">
+    </li>
+</ul>
 
 
 </body>

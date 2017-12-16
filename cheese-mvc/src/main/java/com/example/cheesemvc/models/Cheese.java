@@ -1,9 +1,20 @@
 package com.example.cheesemvc.models;
 
-import com.sun.istack.internal.NotNull;
 
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
 public class Cheese {
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     @NotNull
     @Size(min=3, max=15)
@@ -13,38 +24,24 @@ public class Cheese {
     @Size(min=1, message="Description must not be empty.")
     private String cheeseType;
 
-    private cheeseVariety variety;
-
-    public cheeseVariety getVariety() {
-        return variety;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setVariety(cheeseVariety variety) {
-        this.variety = variety;
-    }
+    @ManyToOne
+    private Category category;
 
-
-
-    private int cheeseId;
-    private static int nextId = 1;
+    //manytoone goes here - replaces cheesevariety
 
     public Cheese(String cheeseName, String cheeseType) {
-        this();
         this.cheeseName = cheeseName;
         this.cheeseType = cheeseType;
     }
 
-    public int getCheeseId() {
-        return cheeseId;
-    }
+    public Cheese() { }
 
-    public void setCheeseId(int cheeseId) {
-        this.cheeseId = cheeseId;
-    }
-
-    public Cheese() {
-        cheeseId = nextId;
-        nextId++;
+    public int getId() {
+        return id;
     }
 
     public String getCheeseName() {
@@ -61,5 +58,9 @@ public class Cheese {
 
     public void setCheeseType(String aCheeseType) {
         this.cheeseType = aCheeseType;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

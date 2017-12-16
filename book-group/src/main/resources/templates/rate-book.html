@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+
+<div th:replace="fragments :: page-header"></div>
+
+<div class="container body-content">
+    <h2>Rate: <span th:text= "${bookTitle}"></span> by  <span th:text="${bookAuthorLast}">Last Name</span> (id = <span th:text="${bookId}">id</span>)</h2>
+
+<form method = "post" style="max-width=600px;">
+    <div class="form-group">
+        <label>Rating:</label>
+        <select name="rating">
+            <option disabled="disabled" selected = "selected"></option>
+            <option value = "1">Awful</option>
+            <option value = "2">Not very good</option>
+            <option value = "3">"Meh"</option>
+            <option value = "4">I liked it</option>
+            <option value = "5">Great!</option>
+        </select>
+        <!-- TODO make sure the integers work -->
+    </div>
+
+</form>
+
+
+</div>
+</body>
+</html>
