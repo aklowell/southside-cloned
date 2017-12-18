@@ -5,14 +5,14 @@
 <h1 th:text="${title}">Default Title</h1>
 <nav th:replace="fragments :: navigation"></nav>
 
-<form method= "post" action = "/menu/add-item" th:object="${form}"   style="max-width:600px;">
+<form method= "post" th:object="${form}" action = "/menu/add-item"   style="max-width:600px;">
     <div class="form-group">
          <label th:for="cheeseId">Cheese</label>
 
-        <input class="form-control" th:field="*{cheeseId}" />
+
         <select name="cheeseId">
             <option th:each="cheese : *{cheeses}"
-                th:text="${cheese.name}"
+                th:text="${cheese.cheeseName}"
                 th:value="${cheese.id}">
             </option>
 
@@ -20,7 +20,7 @@
         <span th:errors="*{cheeseId}" class="error"></span>
     </div>
 
-        <input type="hidden" name="menuId" th:value="*{menu.id}" />
+        <input type="hidden" name="menuId" th:value="${menu.id}" />
 
         <input type = "submit" value="Add Cheese to this Menu"/>
 
