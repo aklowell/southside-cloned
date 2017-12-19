@@ -37,12 +37,13 @@ public class Menu {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public List<Cheese> getCheeses() {
         return cheeses;
+    }
+
+    public void setCheeses(List<Cheese> cheeses) {
+        this.cheeses = cheeses;
     }
 
     public void addItem(Cheese item) {
