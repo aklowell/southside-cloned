@@ -24,7 +24,7 @@
             <td th:text="${book.genre.name}"></td>
             <td th:text="${book.averageRating}"></td>
             <td th:text="${book.meetingDate}"></td>
-            <td><a th:href="@{'/rate/' + ${book.Id}}">Rate this book</a></td>
+            <td><a th:href="@{'/rate/' + ${book.id}}">Rate this book</a></td>
 
         </tr>
     </table>

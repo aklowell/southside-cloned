@@ -1,8 +1,9 @@
 package com.example.bookgroup.controllers;
 
 import com.example.bookgroup.models.Book;
-import com.example.bookgroup.models.BookData;
 import com.example.bookgroup.models.BookGenre;
+import com.example.bookgroup.models.data.BookDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -15,13 +16,15 @@ import javax.validation.Valid;
 @RequestMapping(value = "")
 public class BookController {
 
+    @Autowired
+    private BookDao bookDao;
 
     //welcome page
 
 
     @RequestMapping(value = "book", method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("books", BookData.getAll());
+        model.addAttribute("books", bookDao.findAll());
         model.addAttribute("title", "Book Group Reading List");
         return "book-list";
     }
@@ -42,7 +45,7 @@ public class BookController {
             return "book/book-list";
         }
 
-        BookData.add(newBook);
+        bookDao.save(newBook);
 
         return "redirect:book";
     }
@@ -50,7 +53,7 @@ public class BookController {
     //rate a book
     @RequestMapping(value = "rate/{id}", method = RequestMethod.GET)
     public String displayRateForm(@PathVariable int id, Model model) {
-        Book rateBook = BookData.getById(id);
+        Book rateBook = bookDao.findOne(id);
 
         model.addAttribute("bookTitle", rateBook.getTitle());
         //model.addAttribute("bookAuthorFirst",rateBook.getAuthorFirstName());
@@ -62,7 +65,7 @@ public class BookController {
 
  /*  @RequestMapping(value = "rate/{id}", method = RequestMethod.POST)
     public String processRateForm(int id, String rating) {
-        Book rateBook = BookData.getById(id);
+        Book rateBook = bookDao.findOne(id);
         BookData.addRating(rating);
 
         return "redirect:/book";

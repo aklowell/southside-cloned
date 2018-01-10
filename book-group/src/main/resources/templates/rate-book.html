@@ -7,7 +7,7 @@
 <div th:replace="fragments :: page-header"></div>
 
 <div class="container body-content">
-    <h2>Rate: <span th:text= "${bookTitle}"></span> by  <span th:text="${bookAuthorLast}">Last Name</span> (id = <span th:text="${bookId}">id</span>)</h2>
+    <h2>Rate: <span th:text= "${bookTitle}"></span> by  <span th:text="${bookAuthorLast}">Last Name</span> (id = <span th:text="${book.id}">id</span>)</h2>
 
 <form method = "post" style="max-width=600px;">
     <div class="form-group">
