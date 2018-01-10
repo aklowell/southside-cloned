@@ -7,7 +7,8 @@ public enum BookGenre {
     SCIFI ("Science Fiction"),
     BIO ("Biography"),
     AUTOBIO ("Autobiography"),
-    SELFHELP ("Self Help");
+    SELFHELP ("Self Help"),
+    CLASSIC ("Classic");
 
     private final String name;
 

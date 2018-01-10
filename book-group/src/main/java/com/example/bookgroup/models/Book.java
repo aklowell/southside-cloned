@@ -3,13 +3,19 @@ package com.example.bookgroup.models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
 public class Book {
 
+    @Id
+    @GeneratedValue
     private int id;
-    private static int nextId = 1;
+   // private static int nextId = 1;
 
     @NotNull
     @Size(min = 1, message="Title cannot be empty.")
@@ -51,13 +57,9 @@ public class Book {
         this.genre = genre;
     }
 
-    public Book() {
-        id = nextId;
-        nextId++;
-    }
+    public Book() { }
 
-    public Book(String title, String authorFirstName, String authorLastName, int pages, Date meetingDate, float averageRating) {
-        this();
+    public Book(String title, String authorFirstName, String authorLastName, int pages, Date meetingDate, double averageRating) {
         this.title = title;
         this.authorFirstName = authorFirstName;
         this.authorLastName = authorLastName;
@@ -69,13 +71,7 @@ public class Book {
         this.averageRating = averageRating;
     }
 
-    public static int getNextId() {
-        return nextId;
-    }
 
-    public static void setNextId(int nextId) {
-        Book.nextId = nextId;
-    }
 
     public String getTitle() {
         return title;
@@ -121,9 +117,6 @@ public class Book {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public double getAverageRating() {
         return averageRating;
