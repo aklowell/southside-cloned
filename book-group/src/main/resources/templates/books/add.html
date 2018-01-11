@@ -35,9 +35,17 @@
         </div>
 
         <div class="form-group">
-            <input type="checkbox" th:field="*{type}" th:value="${type}"/>
-            <label th:for="type">Check if recommending a book.</label>
+            <label th:for="members">Members</label>
+            <select name="membersId">
+                <option th:each="members : ${memberss}"
+                        th:text="$members.memberName}"
+                        th:value="${members.id}"></option>
+            </select>
+
         </div>
+            <input type="checkbox" th:field="*{recommended}" th:value="${recommended}"/>
+            <label th:for="recommended">Check if recommending a book.</label>
+
         <input type = "submit" value="Add Book" />
 
     </form>

@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,8 +25,12 @@ public class Book {
     private String authorLastName;
     private int pages;
     private Date meetingDate;
+    private Boolean recommended;
 
-    public Book(String type) {
+    @ManyToOne
+    private Members members;
+
+ /*   public Book(String type) {
         this.type = type;
     }
 
@@ -37,8 +42,15 @@ public class Book {
         this.type = type;
     }
 
-    private String type;
+    private String type; */
 
+    public Boolean getRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(Boolean recommended) {
+        this.recommended = recommended;
+    }
 
     public Book(ArrayList ratings) {
         Ratings = ratings;
@@ -126,6 +138,11 @@ public class Book {
         return Ratings;
     }
 
+    public Members getMembers() {
+        return members;
+    }
 
-
+    public void setMembers(Members members) {
+        this.members = members;
+    }
 }
