@@ -3,6 +3,7 @@ package com.example.bookgroup.models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,22 +30,11 @@ public class Book {
     private Date meetingDate;
     private Boolean recommended;
 
+    private ArrayList<Book> books = new ArrayList<>();
+
     @ManyToOne
     private Members members;
 
- /*   public Book(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    private String type; */
 
     public Boolean getRecommended() {
         return recommended;
@@ -86,12 +76,29 @@ public class Book {
         this.averageRating = averageRating;
     }
 
-  /* public boolean listRecommended() {
-        return getRecommended(true);
+
+    /*find all books that are recommended
+
+
+    public ArrayList<Book> findRecommended(Boolean recommended) {
+        ArrayList<Book> recommendedBooks = new ArrayList<>();
+        for (Book book : books) {
+            if (recommended.booleanValue())
+                recommendedBooks.add(book);
+
+            return recommendedBooks;
+        }
+        return null;
+    }
+
+
+
+
+    public Boolean listRecommended(String b) {
+        return recommended;
    }
 
-    private Boolean getRecommended(boolean b) {
-    }  */
+*/
 
 
 

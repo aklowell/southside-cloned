@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class BookController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processBookAddForm(@ModelAttribute @Valid Book newBook, Errors errors,
                                      @RequestParam int membersId, Model model) {
-        if (errors.hasErrors() || newBook.getTitle().isEmpty()) {
+        if (newBook.getTitle().isEmpty()) {
             model.addAttribute("title", "Add Book");
             model.addAttribute("members", membersDao.findAll());
             return "book/add";
@@ -58,21 +59,9 @@ public class BookController {
         newBook.setMembers(mem);
         bookDao.save(newBook);
 
-        return "book/book-list";
+        return "redirect:/book";
     }
 
-    //list each member's books
-    @RequestMapping(value="book-list", method=RequestMethod.GET)
-    public String members(Model model, @RequestParam int id) {
-        Members mem = membersDao.findOne(id);
-        //TODO put in a link so each member's books get listed
-        //List<Book> book = bookDao.findAll() ??
-        model.addAttribute("books", bookDao.findAll());
-        model.addAttribute("books", "Member Books: " + mem.getMemberName());
-        //same as cheese/index
-        return "book/book-list";
-
-    }
 
 
     //edit a book's details

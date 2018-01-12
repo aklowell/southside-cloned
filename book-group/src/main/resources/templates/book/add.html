@@ -50,8 +50,13 @@
             </select>
 
         </div>
-            <input type="checkbox" th:field="*{recommended}" th:value="${recommended}"/>
-            <label th:for="recommended">Check if recommending a book.</label>
+
+        <div>
+        <label th:for="checkbox">Click if recommending this book</label>
+
+        <input type="checkbox" name="rec" th:field="*{recommended}" />
+            <input type="hidden" name="rec" th:value="false" />
+        </div>
 
         <input type = "submit" value="Add Book" />
 
