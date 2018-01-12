@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+
+<div th:replace="fragments :: page-header"></div>
+<!--
+<div class="container body-content">
+    <h1>Book Group</h1>
+
+    <p>View books by:</p>
+    <ul>
+        TODO add hrefs to the search and list templates
+        <li>Search</li>
+        <li>List</li>
+        <li>Member</li>
+    </ul>
+
+    -->
+<div class="container body-content">
+    <p th:unless = "${books} and ${books.size()}">No books yet!</p>
+    <table class="table">
+        <tr>
+
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Book Group Date</th>
+            <th>Picked By:</th>
+            <th><i>Rating coming soon!</i></th>
+            <th>Click to edit book details</th>
+            <th>More Info, Reviews and Rating</th>
+        </tr>
+        <tr th:each="book : ${books}">
+
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.authorLastName}"></td>
+            <td th:text="${book.genre.name}"></td>
+            <td th:text="${book.meetingDate}"></td>
+            <td th:text="${book.members.memberName}"></td>
+            <td><a th:href="@{'/rate/' + ${book.id}}">Rate this book</a></td>
+            <td><a th:href="@{'/book/edit/' + ${book.id}}">Edit</a></td>
+            <td><a th:href="@{'/book/detail/' +${book.id}}">See details</a></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

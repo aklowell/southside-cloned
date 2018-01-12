@@ -35,10 +35,17 @@
         </div>
 
         <div class="form-group">
-            <label th:for="members">Members</label>
+            <label th:for="meetingDate">Meeting Date</label>
+            <input class="form-control" th:field="*{meetingDate}" />
+        </div>
+
+
+        <div class="form-group">
+            <label th:for="members">Chosen by</label>
             <select name="membersId">
-                <option th:each="members : ${memberss}"
-                        th:text="$members.memberName}"
+                <option
+                        th:each="members : ${memberss}"
+                        th:text="${members.memberName}"
                         th:value="${members.id}"></option>
             </select>
 

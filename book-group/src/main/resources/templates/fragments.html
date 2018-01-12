@@ -8,7 +8,7 @@
     <link th:href="@{/css/book-group.css}" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 
-    <title th:text="'BookGroup' + ${title == null ? '' : ' :: ' + title}">BookGroup</title>
+    <title th:text="'Booksters' + ${title == null ? '' : ' :: ' + title}">BookGroup</title>
 </head>
 
 <body>
@@ -16,13 +16,15 @@
 <div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a th:href="@{/}" class="navbar-brand">Book Group</a>
+            <a th:href="@{/book}" class="navbar-brand">Booksters</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <!-- TODO add hrefs to the list below. -->
-                <li><a th:href = "@{/add}">Add a Book</a></li>
-                <li><a th:href="@{/book}">Book List</a></li>
+                <li><a th:href = "@{/book/add}">Add a Book</a></li>
+
+                <li><a th:href="@{/book/search}">Search</a></li>
+                <li><a th:href="@{/members}">Member List</a></li>
 
             </ul>
         </div>

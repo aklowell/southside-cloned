@@ -16,23 +16,23 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping(value = "")
+@RequestMapping(value = "book")
 public class BookController {
 
     @Autowired
-    BookDao bookDao;
+    private BookDao bookDao;
 
     @Autowired
-    MembersDao membersDao;
+    private MembersDao membersDao;
 
     //welcome page
 
 
-    @RequestMapping(value = "book", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("books", bookDao.findAll());
         model.addAttribute("title", "Book Group Reading List");
-        return "book-list";
+        return "book/index";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
@@ -40,8 +40,8 @@ public class BookController {
         model.addAttribute("title", "Add Book");
         model.addAttribute(new Book());
         model.addAttribute("bookGenres", BookGenre.values());
-        model.addAttribute("members", membersDao.findAll());
-        return "add";
+        model.addAttribute("memberss", membersDao.findAll());
+        return "book/add";
     }
 
     //?MODEL BINDING
@@ -51,28 +51,75 @@ public class BookController {
         if (errors.hasErrors() || newBook.getTitle().isEmpty()) {
             model.addAttribute("title", "Add Book");
             model.addAttribute("members", membersDao.findAll());
-            return "book/book-list";
+            return "book/add";
         }
 
         Members mem = membersDao.findOne(membersId);
         newBook.setMembers(mem);
         bookDao.save(newBook);
 
-        return "redirect:book";
+        return "book/book-list";
     }
 
     //list each member's books
-    @RequestMapping(value="lists", method=RequestMethod.GET)
+    @RequestMapping(value="book-list", method=RequestMethod.GET)
     public String members(Model model, @RequestParam int id) {
         Members mem = membersDao.findOne(id);
-        List<Book> books = mem.getBooks();
-        model.addAttribute("books", books);
+        //TODO put in a link so each member's books get listed
+        //List<Book> book = bookDao.findAll() ??
+        model.addAttribute("books", bookDao.findAll());
         model.addAttribute("books", "Member Books: " + mem.getMemberName());
         //same as cheese/index
         return "book/book-list";
 
     }
 
+
+    //edit a book's details
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+    public String displayEditForm(@PathVariable int id, Model model) {
+        Book editBook = bookDao.findOne(id);
+
+        model.addAttribute("title", editBook.getTitle());
+        model.addAttribute("authorFirstName", editBook.getAuthorFirstName());
+        model.addAttribute("authorLastName", editBook.getAuthorLastName());
+        model.addAttribute("bookId", bookDao.findOne(id));
+
+        return "book/edit";
+    }
+
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.POST)
+    public String processEditForm(int id, String title, String authorFirstName, String authorLastName) {
+        Book updateBook = bookDao.findOne(id);
+        updateBook.setTitle(title);
+        updateBook.setAuthorFirstName(authorFirstName);
+        updateBook.setAuthorLastName(authorLastName);
+
+        bookDao.save(updateBook);
+
+        return "redirect:/book";
+    }
+
+    //show one book's details
+    @RequestMapping(value="detail/{id}", method = RequestMethod.GET)
+    public String displayDetailsForm(@PathVariable int id, Model model) {
+        Book displayBook = bookDao.findOne(id);
+        model.addAttribute("title", displayBook.getTitle());
+        model.addAttribute("bookId", bookDao.findOne(id));
+        model.addAttribute(displayBook);
+
+        return "book/detail";
+
+    }
+
+    /*TODO list of recommended books
+    @RequestMapping(value="recommended", method = RequestMethod.GET)
+    public String displayRecommended(Model model) {
+
+        Book books = BookDao.listRecommended(true);
+        return "book/recommended";
+    }
+*/
     //rate a book
     @RequestMapping(value = "rate/{id}", method = RequestMethod.GET)
     public String displayRateForm(@PathVariable int id, Model model) {

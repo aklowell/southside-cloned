@@ -10,16 +10,18 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
+
 @Entity
 public class Book {
 
     @Id
     @GeneratedValue
     private int id;
-   // private static int nextId = 1;
+    // private static int nextId = 1;
 
     @NotNull
-    @Size(min = 1, message="Title cannot be empty.")
+    @Size(min = 1, message = "Title cannot be empty.")
     private String title;
     private String authorFirstName;
     private String authorLastName;
@@ -69,7 +71,8 @@ public class Book {
         this.genre = genre;
     }
 
-    public Book() { }
+    public Book() {
+    }
 
     public Book(String title, String authorFirstName, String authorLastName, int pages, Date meetingDate, double averageRating) {
         this.title = title;
@@ -82,6 +85,13 @@ public class Book {
 
         this.averageRating = averageRating;
     }
+
+  /* public boolean listRecommended() {
+        return getRecommended(true);
+   }
+
+    private Boolean getRecommended(boolean b) {
+    }  */
 
 
 
@@ -118,7 +128,7 @@ public class Book {
     }
 
     public Date getMeetingDate() {
-        return meetingDate;
+    return meetingDate;
     }
 
     public void setMeetingDate(Date meetingDate) {
@@ -145,4 +155,9 @@ public class Book {
     public void setMembers(Members members) {
         this.members = members;
     }
+
+
+
+
+
 }
