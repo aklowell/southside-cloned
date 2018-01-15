@@ -4,10 +4,7 @@ package com.example.bookgroup.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -28,28 +25,76 @@ public class Book {
     private String authorLastName;
     private int pages;
     private Date meetingDate;
-    private Boolean recommended;
+    private int recommended;
+    private double rate;
+
+    private double averageRating;
+
+    @ElementCollection
+    private List<Double> ratings;
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public List<Double> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Double> ratings) {
+        this.ratings = ratings;
+    }
 
     private ArrayList<Book> books = new ArrayList<>();
+
+    //private List<Double> ratings = new ArrayList<>();
+
+
+
+     public double calculateAverage(List bookRatings) {
+     //   List<Double> ratings = new ArrayList<>();
+        if(ratings==null ||ratings.isEmpty()) {
+            return 0;
+        }
+        double sum = 0;
+
+        ratings.add(rate);
+
+        for(Double rating : ratings) {
+
+            sum += rating;
+        }
+        return sum / ratings.size();
+       // return averageRating = (sum/ratings.size());
+    }
+
+
+
+
+    private static Book instance;
+
+
 
     @ManyToOne
     private Members members;
 
-
-    public Boolean getRecommended() {
+    public int getRecommended() {
         return recommended;
     }
 
-    public void setRecommended(Boolean recommended) {
+    //TODO take out if not working
+    public static Book getInstance() {
+        if (instance == null) {
+            instance = new Book();
+        }
+        return instance;
+    }
+        //TODO end
+    public void setRecommended(int recommended) {
         this.recommended = recommended;
     }
 
-    public Book(ArrayList ratings) {
-        Ratings = ratings;
-    }
 
-    private ArrayList Ratings;
-    private double averageRating;
 
     private BookGenre genre;
 
@@ -64,42 +109,16 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String authorFirstName, String authorLastName, int pages, Date meetingDate, double averageRating) {
+    public Book(String title, String authorFirstName, String authorLastName, int pages, Date meetingDate, List ratings) {
         this.title = title;
         this.authorFirstName = authorFirstName;
         this.authorLastName = authorLastName;
         this.pages = pages;
         this.meetingDate = meetingDate;
 
-        this.Ratings = new ArrayList<>();
+        this.ratings = ratings;
 
-        this.averageRating = averageRating;
     }
-
-
-    /*find all books that are recommended
-
-
-    public ArrayList<Book> findRecommended(Boolean recommended) {
-        ArrayList<Book> recommendedBooks = new ArrayList<>();
-        for (Book book : books) {
-            if (recommended.booleanValue())
-                recommendedBooks.add(book);
-
-            return recommendedBooks;
-        }
-        return null;
-    }
-
-
-
-
-    public Boolean listRecommended(String b) {
-        return recommended;
-   }
-
-*/
-
 
 
     public String getTitle() {
@@ -135,7 +154,7 @@ public class Book {
     }
 
     public Date getMeetingDate() {
-    return meetingDate;
+        return meetingDate;
     }
 
     public void setMeetingDate(Date meetingDate) {
@@ -147,13 +166,9 @@ public class Book {
     }
 
 
-    public double getAverageRating() {
-        return averageRating;
-    }
 
-    public ArrayList getRatings() {
-        return Ratings;
-    }
+
+
 
     public Members getMembers() {
         return members;
@@ -163,7 +178,32 @@ public class Book {
         this.members = members;
     }
 
+    public ArrayList<Book> findRecs(int status) {
+        ArrayList<Book> recBooks = new ArrayList<>();
+        for (Book book : recBooks) {
+            if (book.getRecommended() == status) {
+                recBooks.add(book);
+            }
 
+        }
+        return recBooks;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating() {
+        this.averageRating = averageRating;
+    }
 
 
 

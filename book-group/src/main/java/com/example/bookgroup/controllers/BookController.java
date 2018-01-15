@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,11 +21,15 @@ import java.util.List;
 @RequestMapping(value = "book")
 public class BookController {
 
+    private Book book = Book.getInstance();
+
     @Autowired
     private BookDao bookDao;
 
     @Autowired
     private MembersDao membersDao;
+
+
 
     //welcome page
 
@@ -49,7 +54,7 @@ public class BookController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processBookAddForm(@ModelAttribute @Valid Book newBook, Errors errors,
                                      @RequestParam int membersId, Model model) {
-        if (newBook.getTitle().isEmpty()) {
+       if (newBook.getTitle().isEmpty()) {
             model.addAttribute("title", "Add Book");
             model.addAttribute("members", membersDao.findAll());
             return "book/add";
@@ -101,34 +106,54 @@ public class BookController {
 
     }
 
-    /*TODO list of recommended books
+        //TODO list of recommended books
     @RequestMapping(value="recommended", method = RequestMethod.GET)
     public String displayRecommended(Model model) {
 
-        Book books = BookDao.listRecommended(true);
+        ArrayList<Book> books;
+
+        model.addAttribute("books", book.findRecs(1));
+
+
         return "book/recommended";
     }
-*/
+
+
+
     //rate a book
     @RequestMapping(value = "rate/{id}", method = RequestMethod.GET)
     public String displayRateForm(@PathVariable int id, Model model) {
         Book rateBook = bookDao.findOne(id);
 
-        model.addAttribute("bookTitle", rateBook.getTitle());
+        model.addAttribute("booktitle", rateBook.getTitle());
         //model.addAttribute("bookAuthorFirst",rateBook.getAuthorFirstName());
-        model.addAttribute("bookAuthorLast", rateBook.getAuthorLastName());
+        model.addAttribute("author", rateBook.getAuthorLastName());
         model.addAttribute("bookId", rateBook.getId());
 
-        return "rate-book";
+        return "book/rate";
     }
 
- /*  @RequestMapping(value = "rate/{id}", method = RequestMethod.POST)
-    public String processRateForm(int id, String rating) {
+    @RequestMapping(value = "rate/{id}", method = RequestMethod.POST)
+    public String processRateForm(int id, double rate, Model model) {
         Book rateBook = bookDao.findOne(id);
-        BookData.addRating(rating);
+        rateBook.setRate(rate);
+
+        //List rtngs = rateBook.getRatings();
+        //rtngs.add(rate);
+        //rateBook.calculateAverage(rateBook.getRatings());
+        //rateBook.setRatings(rtngs);
+
+
+
+        rateBook.setAverageRating(rateBook.calculateAverage(rateBook.getRatings()));
+        //rateBook.getAverageRating();
+       // rateBook.setAverageRating(rateBook.calculateAverage());
+
+       // model.addAttribute("avg", rateBook.calculateAverage());
+        bookDao.save(rateBook);
 
         return "redirect:/book";
-    }*/
+    }
 }
 
 

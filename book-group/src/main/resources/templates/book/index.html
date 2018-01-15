@@ -28,6 +28,7 @@
             <th>Genre</th>
             <th>Book Group Date</th>
             <th>Picked By:</th>
+            <th>Average Rating:</th>
             <th><i>Rating coming soon!</i></th>
             <th>Click to edit book details</th>
             <th>More Info, Reviews and Rating</th>
@@ -39,7 +40,8 @@
             <td th:text="${book.genre.name}"></td>
             <td th:text="${book.meetingDate}"></td>
             <td th:text="${book.members.memberName}"></td>
-            <td><a th:href="@{'/rate/' + ${book.id}}">Rate this book</a></td>
+            <td th:text="${book.averageRating}"></td>
+            <td><a th:href="@{'/book/rate/' + ${book.id}}">Rate this book</a></td>
             <td><a th:href="@{'/book/edit/' + ${book.id}}">Edit</a></td>
             <td><a th:href="@{'/book/detail/' +${book.id}}">See details</a></td>
         </tr>

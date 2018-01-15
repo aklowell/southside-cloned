@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+
+<div th:replace="fragments :: page-header"></div>
+
+<div class="container body-content">
+
+    <h2>Rate book: <span th:text= "${booktitle}">Book Name</span> (id = <span th:text="${bookId}">id</span>)</h2>
+
+
+    <form method = "post" style="max-width=600px;">
+    <div class="form-group">
+        <label th:for="rate">Rating (1-5):</label>
+        <input  width="50%" type="number" name="rate" min="1" max="5"  />
+        <!-- TODO make sure the integers work -->
+    </div>
+    <input type="hidden" th:value="${id}" name="id" />
+     <input type = "submit" value="Submit Rating" />
+</form>
+
+
+</div>
+</body>
+</html>
