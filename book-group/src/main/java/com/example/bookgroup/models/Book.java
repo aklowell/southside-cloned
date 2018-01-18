@@ -2,6 +2,7 @@ package com.example.bookgroup.models;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -52,7 +53,7 @@ public class Book {
 
 
      public double calculateAverage(List bookRatings) {
-     //   List<Double> ratings = new ArrayList<>();
+        //List<Double> ratings = new ArrayList<>();
         if(ratings==null ||ratings.isEmpty()) {
             return 0;
         }
@@ -60,9 +61,12 @@ public class Book {
 
         ratings.add(rate);
 
+        //List.stream(ratings).average();
+
         for(Double rating : ratings) {
 
             sum += rating;
+            
         }
         return sum / ratings.size();
        // return averageRating = (sum/ratings.size());
