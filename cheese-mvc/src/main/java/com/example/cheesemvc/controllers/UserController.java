@@ -2,6 +2,8 @@
 package com.example.cheesemvc.controllers;
 
 import com.example.cheesemvc.models.User;
+import com.example.cheesemvc.models.data.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -16,6 +18,8 @@ import javax.validation.Valid;
 @RequestMapping("user")
 public class UserController {
 
+    @Autowired
+    private UserDao userDao;
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
@@ -42,8 +46,24 @@ public class UserController {
 
         else {
             model.addAttribute("username", user.getUsername());
-            return "user/index";
+            userDao.save(user);
+            return "user/add";
         }
+
+        /*
+
+           @RequestMapping(value="add", method = RequestMethod.POST)
+    public String processCatAddForm(Model model, @ModelAttribute @Valid Category category, Errors errors) {
+        //validate
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Category");
+            return "category/add";
+        }
+        categoryDao.save(category);
+
+        return "redirect:/category";
+    }
+         */
 
     }
 

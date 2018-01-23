@@ -19,6 +19,8 @@
 
     -->
 <div class="container body-content">
+
+    <h2>Booksters Reading List</h2>
     <p th:unless = "${books} and ${books.size()}">No books yet!</p>
     <table class="table">
         <tr>
@@ -26,7 +28,7 @@
             <th>Title</th>
             <th>Author</th>
             <th>Genre</th>
-            <th>Book Group Date</th>
+
             <th>Picked By:</th>
             <th>Average Rating:</th>
             <th><i>Rating coming soon!</i></th>
@@ -38,10 +40,11 @@
             <td th:text="${book.title}"></td>
             <td th:text="${book.authorLastName}"></td>
             <td th:text="${book.genre.name}"></td>
-            <td th:text="${book.meetingDate}"></td>
+
+
             <td th:text="${book.members.memberName}"></td>
             <td th:text="${book.averageRating}"></td>
-            <td><a th:href="@{'/book/rate/' + ${book.id}}">Rate this book</a></td>
+            <td><a th:href="@{'/rating/rate/' + ${book.id}}">Rate this book</a></td>
             <td><a th:href="@{'/book/edit/' + ${book.id}}">Edit</a></td>
             <td><a th:href="@{'/book/detail/' +${book.id}}">See details</a></td>
         </tr>

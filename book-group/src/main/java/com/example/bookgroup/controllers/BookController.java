@@ -3,8 +3,10 @@ package com.example.bookgroup.controllers;
 import com.example.bookgroup.models.Book;
 import com.example.bookgroup.models.BookGenre;
 import com.example.bookgroup.models.Members;
+import com.example.bookgroup.models.Rating;
 import com.example.bookgroup.models.data.BookDao;
 import com.example.bookgroup.models.data.MembersDao;
+import com.example.bookgroup.models.data.RatingDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,8 @@ public class BookController {
     @Autowired
     private MembersDao membersDao;
 
+    @Autowired
+    private RatingDao ratingDao;
 
 
     //welcome page
@@ -37,7 +41,7 @@ public class BookController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("books", bookDao.findAll());
-        model.addAttribute("title", "Book Group Reading List");
+        model.addAttribute("title", "Booksters Reading List");
         return "book/index";
     }
 
@@ -52,9 +56,8 @@ public class BookController {
 
     //?MODEL BINDING
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String processBookAddForm(@ModelAttribute @Valid Book newBook, Errors errors,
-                                     @RequestParam int membersId, Model model) {
-       if (newBook.getTitle().isEmpty()) {
+    public String processBookAddForm(@ModelAttribute @Valid Book newBook, Errors errors, @RequestParam int membersId, Model model) {
+        if (newBook.getTitle().isEmpty()) {
             model.addAttribute("title", "Add Book");
             model.addAttribute("members", membersDao.findAll());
             return "book/add";
@@ -66,7 +69,6 @@ public class BookController {
 
         return "redirect:/book";
     }
-
 
 
     //edit a book's details
@@ -95,7 +97,7 @@ public class BookController {
     }
 
     //show one book's details
-    @RequestMapping(value="detail/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
     public String displayDetailsForm(@PathVariable int id, Model model) {
         Book displayBook = bookDao.findOne(id);
         model.addAttribute("title", displayBook.getTitle());
@@ -106,21 +108,21 @@ public class BookController {
 
     }
 
-        //TODO list of recommended books
-    @RequestMapping(value="recommended", method = RequestMethod.GET)
-    public String displayRecommended(Model model) {
+    //TODO list of recommended books
+    @RequestMapping(value = "recommended", method = RequestMethod.GET)
+    public String displayRecommended(Model model, String status) {
 
-        ArrayList<Book> books;
 
-        model.addAttribute("books", book.findRecs(1));
 
+
+        model.addAttribute("books", bookDao.findAll());
 
         return "book/recommended";
-    }
+            }
 
 
-
-    //rate a book
+        //rate a book
+    /*TODO figure this out
     @RequestMapping(value = "rate/{id}", method = RequestMethod.GET)
     public String displayRateForm(@PathVariable int id, Model model) {
         Book rateBook = bookDao.findOne(id);
@@ -130,26 +132,34 @@ public class BookController {
         model.addAttribute("author", rateBook.getAuthorLastName());
         model.addAttribute("bookId", rateBook.getId());
 
-        return "book/rate";
+        return "rating/rate";
     }
+}
+
+
+
 
     @RequestMapping(value = "rate/{id}", method = RequestMethod.POST)
     public String processRateForm(int id, double rate, Model model) {
         Book rateBook = bookDao.findOne(id);
-        rateBook.setRate(rate);
-
-        //List rtngs = rateBook.getRatings();
-        //rtngs.add(rate);
-        //rateBook.calculateAverage(rateBook.getRatings());
-        //rateBook.setRatings(rtngs);
 
 
+        Rating bookRatings = ratingsDao.findOne(getBookId());
+
+        bookRatings.addItem(rate);
+        rateBook.setRatings();
+
+
+        List rtngs = rateBook.getRatings();
+        rtngs.add(rate);
+        rateBook.calculateAverage(rateBook.getRatings());
+        rateBook.setRatings(rtngs);
 
         rateBook.setAverageRating(rateBook.calculateAverage(rateBook.getRatings()));
-        //rateBook.getAverageRating();
-       // rateBook.setAverageRating(rateBook.calculateAverage());
+        rateBook.getAverageRating();
+        rateBook.setAverageRating(rateBook.calculateAverage());
 
-       // model.addAttribute("avg", rateBook.calculateAverage());
+        model.addAttribute("avg", rateBook.calculateAverage());
         bookDao.save(rateBook);
 
         return "redirect:/book";
@@ -157,3 +167,5 @@ public class BookController {
 }
 
 
+*/
+    }

@@ -1,10 +1,11 @@
 package com.example.bookgroup.models;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.util.*;
+import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,17 +27,57 @@ public class Book {
     private String authorLastName;
     private int pages;
     private Date meetingDate;
-    private int recommended;
-    private double rate;
+    private String recommended;
+
+    public String getRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(String recommended) {
+        this.recommended = recommended;
+    }
+
+
+
+    //TODO here is the new many to many stuff
+    @ManyToMany
+    private List<Rating> ratings;
+    public List<Rating> getRatings() { return ratings; }
+    public void setRatings(List<Rating> ratings) { this.ratings=ratings;}
+    public void addItem(Rating item) { ratings.add(item); }
+
+    //public static void findAll() { Book.findAll();}
+
+    //TODO moved to Rating class
+    //private double rate;
 
     private double averageRating;
 
-    @ElementCollection
-    private List<Double> ratings;
+    public int sum (List<Integer> list) {
 
-    public void setAverageRating(double averageRating) {
-        this.averageRating = averageRating;
+        int sum = 0;
+        for (int i: list) {
+            sum += i;
+        }
+        return sum;
     }
+/*
+    public void calcAverage(Book book) {
+        List<Rating> rates = new ArrayList<>();
+        Book avgBook = new Book();
+        rates = avgBook.getRatings();
+        //sum (rates);
+        int total = 0;
+        for(int i = 0; i<rates.size(); i++) {
+            total = total + rates.get(i);
+        }
+        double avg = int total / rates.size();
+    }
+
+   //TODO moved to Rating class
+    //@ManyToMany
+   // @ElementCollection
+
 
     public List<Double> getRatings() {
         return ratings;
@@ -46,31 +87,23 @@ public class Book {
         this.ratings = ratings;
     }
 
+    @ManyToMany(mappedBy="ratings")
     private ArrayList<Book> books = new ArrayList<>();
 
     //private List<Double> ratings = new ArrayList<>();
-
-
-
-     public double calculateAverage(List bookRatings) {
-        //List<Double> ratings = new ArrayList<>();
-        if(ratings==null ||ratings.isEmpty()) {
-            return 0;
-        }
-        double sum = 0;
-
-        ratings.add(rate);
-
-        //List.stream(ratings).average();
-
-        for(Double rating : ratings) {
-
-            sum += rating;
-            
-        }
-        return sum / ratings.size();
-       // return averageRating = (sum/ratings.size());
+public double getRate() {
+        return rate;
     }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+*/
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
+
 
 
 
@@ -82,9 +115,7 @@ public class Book {
     @ManyToOne
     private Members members;
 
-    public int getRecommended() {
-        return recommended;
-    }
+
 
     //TODO take out if not working
     public static Book getInstance() {
@@ -94,9 +125,7 @@ public class Book {
         return instance;
     }
         //TODO end
-    public void setRecommended(int recommended) {
-        this.recommended = recommended;
-    }
+
 
 
 
@@ -182,24 +211,10 @@ public class Book {
         this.members = members;
     }
 
-    public ArrayList<Book> findRecs(int status) {
-        ArrayList<Book> recBooks = new ArrayList<>();
-        for (Book book : recBooks) {
-            if (book.getRecommended() == status) {
-                recBooks.add(book);
-            }
 
-        }
-        return recBooks;
-    }
 
-    public double getRate() {
-        return rate;
-    }
 
-    public void setRate(double rate) {
-        this.rate = rate;
-    }
+
 
     public double getAverageRating() {
         return averageRating;
@@ -210,5 +225,6 @@ public class Book {
     }
 
 
-
+    public void add(Book book) {
+    }
 }
