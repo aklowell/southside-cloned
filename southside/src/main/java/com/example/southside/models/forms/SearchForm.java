@@ -2,6 +2,7 @@ package com.example.southside.models.forms;
 
 import com.example.southside.models.Activity;
 
+
 import javax.validation.constraints.NotNull;
 
 public class SearchForm {

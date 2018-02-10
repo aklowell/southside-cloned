@@ -3,6 +3,7 @@ package com.example.southside.controllers;
 
 import com.example.southside.models.Activity;
 import com.example.southside.models.data.ActivityDao;
+import com.example.southside.models.data.SkillDao;
 import com.example.southside.models.forms.SearchForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class SearchController {
 
     @Autowired
     private ActivityDao activityDao;
+
+    @Autowired
+    SkillDao skillDao;
 
     private Activity activity = Activity.getInstance();
 
@@ -43,7 +47,7 @@ public class SearchController {
 
             return "search/results";
     }
-
+//TODO CLEAR THE PREVIOUS SEARCH BEFORE THEY DO A NEW ONE
 }
   //      return "search/index";
   //  }

@@ -44,9 +44,7 @@ public class Activity {
 
 
  //TODO should skill be enum or class, to put in a list?
-    private String eSkill;
 
-    private String sSkill;
 
     private String teacher;
 
@@ -177,21 +175,6 @@ public class Activity {
         this.linkVideo = linkVideo;
     }
 
-    public String geteSkill() {
-        return eSkill;
-    }
-
-    public void seteSkill(String eSkill) {
-        this.eSkill = eSkill;
-    }
-
-    public String getsSkill() {
-        return sSkill;
-    }
-
-    public void setsSkill(String sSkill) {
-        this.sSkill = sSkill;
-    }
 
     public String getTeacher() {
         return teacher;
@@ -233,7 +216,48 @@ public class Activity {
         this.sRelevance = sRelevance;
     }
 
+    public static Activity instance;
+
+    public static Activity getInstance() {
+        if(instance==null) {
+            instance = new Activity();
+        }
+        return instance;
+    }
+
     public int getId() {
         return id;
     }
+
+    @ManyToMany
+    private List<Skill> skills;
+
+    public List<Skill> getSkills() {return skills; }
+    public void setSkills(List<Skill> skills) { this.skills = skills; }
+
+    public void addItem(Skill item) { skills.add(item); }
+
+
+
 }
+
+/* DISCARDED CODE:
+  private String eSkill;
+
+    private String sSkill;
+
+public String geteSkill() {
+        return eSkill;
+    }
+
+    public void seteSkill(String eSkill) {
+        this.eSkill = eSkill;
+    }
+
+    public String getsSkill() {
+        return sSkill;
+    }
+
+    public void setsSkill(String sSkill) {
+        this.sSkill = sSkill;
+ */

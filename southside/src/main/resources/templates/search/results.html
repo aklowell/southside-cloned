@@ -4,7 +4,8 @@
 <body class="container">
 <div th:replace="fragments :: page-header"></div>
 
-<!-- TODO get the titles to refer to what the person searched for -->
+<!-- TODO get the titles to refer to what the person searched for and make the skills show up in there, or put them on detail page -->
+
 
 <div th:unless="${bysubjects} and ${bysubjects.size()}">
     <h2>No Subject Results</h2>
@@ -18,7 +19,7 @@
         <tr>
             <th>Name</th>
             <th>Subject</th>
-            <th>Sub-Category</th>
+
             <th>Ages</th>
             <th>When or Where</th>
             <th>See details</th>
@@ -26,7 +27,8 @@
         <tr th:each="bysubject : ${bysubjects}">
             <td th:text="${bysubject.eName}"></td>
             <td th:text="${bysubject.eSubject}"></td>
-            <td th:text="${bysubject.eSkill}"></td>
+
+
             <td th:text="${bysubject.eAges}"></td>
             <td th:text="${bysubject.eWhere}"></td>
             <td><a th:href="@{'/activity/detail/' +${bysubject.id}}">See details</a></td>
@@ -57,7 +59,8 @@
         <tr th:each="age : ${ages}">
             <td th:text="${age.eName}"></td>
             <td th:text="${age.eSubject}"></td>
-            <td th:text="${age.eSkill}"></td>
+
+
             <td th:text="${age.eAges}"></td>
             <td th:text="${age.eWhere}"></td>
             <td><a th:href="@{'/activity/detail/' +${age.id}}">See details</a></td>
@@ -88,7 +91,8 @@
         <tr th:each="where : ${wheres}">
             <td th:text="${where.eName}"></td>
             <td th:text="${where.eSubject}"></td>
-            <td th:text="${where.eSkill}"></td>
+
+
             <td th:text="${where.eAges}"></td>
             <td th:text="${where.eWhere}"></td>
             <td><a th:href="@{'/activity/detail/' +${where.id}}">See details</a></td>
